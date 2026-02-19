@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiUser, FiMail, FiLock, FiKey } from 'react-icons/fi';
 import './Register.css';
 
 const API_BASE_URL = 'http://localhost:8080/api/auth';
 
+
 const Register = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        password: '',
-        role: 'student'
-    });
-    const [verificationCode, setVerificationCode] = useState('');
-    const [isVerifying, setIsVerifying] = useState(false);
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+        const navigate = useNavigate();
+        const [formData, setFormData] = useState({
+                fullName: '',
+                email: '',
+                password: '',
+                role: 'student'
+        });
+        const [verificationCode, setVerificationCode] = useState('');
+        const [isVerifying, setIsVerifying] = useState(false);
+        const [message, setMessage] = useState('');
+        const [error, setError] = useState('');
+        const [loading, setLoading] = useState(false);
+
+        useEffect(() => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user && user.role) {
+                if (user.role.toLowerCase() === 'admin') navigate('/dashboard/admin');
+                else if (user.role.toLowerCase() === 'professional') navigate('/dashboard/professional');
+                else navigate('/dashboard/student');
+            }
+        }, [navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,12 +48,16 @@ const Register = () => {
 
             const data = await response.json();
 
-            if (response.ok) {
-                setMessage(data.message || 'Verification code sent to your email.');
-                setIsVerifying(true);
-            } else {
-                setError(data.message || 'Registration failed. Please try again.');
-            }
+                        if (response.ok) {
+                                setMessage(data.message || 'Verification code sent to your email.');
+                                setIsVerifying(true);
+                        } else {
+                                if (data.message && data.message.toLowerCase().includes('already in use')) {
+                                    setError('This email is already registered. Please log in or use a different email.');
+                                } else {
+                                    setError(data.message || 'Registration failed. Please try again.');
+                                }
+                        }
         } catch (err) {
             setError('Could not connect to the server. Is it running?');
         } finally {
@@ -150,6 +164,7 @@ const Register = () => {
                             >
                                 <option value="student">Student</option>
                                 <option value="professional">Professional Learner</option>
+                                <option value="admin">Admin</option>
                             </select>
                         </div>
                         <button type="submit" className="btn-auth" disabled={loading}>

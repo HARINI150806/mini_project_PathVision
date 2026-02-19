@@ -48,14 +48,31 @@ public class AuthService {
         // Generate verification code
         String verificationCode = String.valueOf(new Random().nextInt(900000) + 100000); // 6-digit code
 
+        Role userRole;
+        if (request.getRole() != null) {
+            switch (request.getRole().toUpperCase()) {
+                case "ADMIN":
+                    userRole = Role.ADMIN;
+                    break;
+                case "PROFESSIONAL":
+                case "PROFESSIONAL LEARNER":
+                    userRole = Role.PROFESSIONAL;
+                    break;
+                default:
+                    userRole = Role.STUDENT;
+            }
+        } else {
+            userRole = Role.STUDENT;
+        }
+
         var user = User.builder()
                 .fullName(request.getFullName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.STUDENT) // Default role is STUDENT
+                .role(userRole)
                 .verificationCode(verificationCode)
                 .verificationCodeExpiresAt(LocalDateTime.now().plusMinutes(15))
-                .enabled(false) 
+                .enabled(false)
                 .build();
         
         userRepository.save(user); // Save first to persist

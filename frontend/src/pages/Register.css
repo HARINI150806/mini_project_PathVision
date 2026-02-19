@@ -45,7 +45,7 @@
     align-items: center;
     gap: 1.5rem;
     border: none;
-    transition: background 0.3s;
+    
 }
 
 .auth-header {
@@ -98,25 +98,7 @@
     font-size: 0.875rem;
     font-weight: 500;
 }
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    padding: 0.75rem 1rem 0.75rem 2.75rem; /* Add left padding for icon */
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-input);
-    color: var(--text-primary);
-    font-size: 0.95rem;
-    transition: all 0.2s;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    font-size: 0.95rem;
-    transition: all 0.2s;
-}
+   
 .form-group input {
     padding: 0.75rem 1rem;
     border-radius: 8px;

@@ -1,11 +1,38 @@
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import Logo from '../common/Logo';
+import BrightnessIcon from "../../assets/brightness.png";
+
+
 import './Navbar.css';
+
+const getDashboardRoute = (role) => {
+  if (!role) return '/';
+  if (role.toLowerCase() === 'admin') return '/dashboard/admin';
+  if (role.toLowerCase() === 'professional') return '/dashboard/professional';
+  return '/dashboard/student';
+};
+
+const getDashboardName = (role) => {
+  if (!role) return '';
+  if (role.toLowerCase() === 'admin') return 'Admin Dashboard';
+  if (role.toLowerCase() === 'professional') return 'Professional Dashboard';
+  return 'Student Dashboard';
+};
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
 
   return (
     <nav className="navbar">
@@ -21,9 +48,24 @@ const Navbar = () => {
           <li><Link to="/assessment">Assessment</Link></li>
           <li><Link to="/colleges">Colleges</Link></li>
           <li><button onClick={toggleTheme} className="theme-toggle">
-            {theme === 'light' ? '🌙' : '☀️'}
+            {theme === 'light' ? <div className="home-feature-icon">
+  <img src={BrightnessIcon} alt="Brightness Icon" />
+</div>
+ : '☀️'}
           </button></li>
-          <li><Link to="/login" className="nav-btn">Login</Link></li>
+          {user ? (
+            <>
+              <li>
+                <Link to={getDashboardRoute(user.role)} className="nav-btn dashboard-btn">
+                  {getDashboardName(user.role)}
+                </Link>
+              </li>
+              <li style={{fontWeight:'bold',color:'#2a4d8f'}}>{user.name}</li>
+              <li><button onClick={handleLogout} className="nav-btn logout-btn">Logout</button></li>
+            </>
+          ) : (
+            <li><Link to="/login" className="nav-btn">Login</Link></li>
+          )}
         </ul>
       </div>
     </nav>

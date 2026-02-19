@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock } from 'react-icons/fi';
 import './Login.css';
 
 const API_BASE_URL = 'http://localhost:8080/api/auth';
 
+
 const Login = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+        const navigate = useNavigate();
+        const [formData, setFormData] = useState({
+                email: '',
+                password: ''
+        });
+        const [error, setError] = useState('');
+        const [loading, setLoading] = useState(false);
+
+        useEffect(() => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user && user.role) {
+                if (user.role.toLowerCase() === 'admin') navigate('/dashboard/admin');
+                else if (user.role.toLowerCase() === 'professional') navigate('/dashboard/professional');
+                else navigate('/dashboard/student');
+            }
+        }, [navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,9 +45,22 @@ const Login = () => {
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify({ name: data.name, role: data.role }));
-                navigate('/');
+                // Navigate to dashboard based on role
+                if (data.role && data.role.toLowerCase() === 'admin') {
+                    navigate('/dashboard/admin');
+                } else if (data.role && data.role.toLowerCase() === 'professional') {
+                    navigate('/dashboard/professional');
+                } else {
+                    navigate('/dashboard/student');
+                }
             } else {
-                setError(data.message || 'Invalid email or password.');
+                if (data.message && data.message.toLowerCase().includes('not found')) {
+                  setError('Email does not exist. Please register first.');
+                } else if (data.message && data.message.toLowerCase().includes('verify')) {
+                  setError('Account not verified. Please check your email for the verification code.');
+                } else {
+                  setError(data.message || 'Invalid email or password.');
+                }
             }
         } catch (err) {
             setError('Could not connect to the server. Is it running?');
@@ -55,7 +78,6 @@ const Login = () => {
                 </p>
 
                 {error && <div className="alert error">{error}</div>}
-
 
                 <form onSubmit={handleLogin} className="auth-form">
                     <div className="input-group">

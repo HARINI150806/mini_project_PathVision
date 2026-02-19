@@ -21,11 +21,12 @@ public class AdminSeeder {
             String adminEmail = "admin@pathvision.com";
             if (!userRepository.existsByEmail(adminEmail)) {
                 User admin = User.builder()
-                        .fullName("Super Admin")
-                        .email(adminEmail)
-                        .password(passwordEncoder.encode("admin123")) // Hardcoded password
-                        .role(Role.ADMIN)
-                        .build();
+                    .fullName("Super Admin")
+                    .email(adminEmail)
+                    .password(passwordEncoder.encode("admin123")) // Hardcoded password
+                    .role(Role.ADMIN)
+                    .enabled(true)
+                    .build();
                 userRepository.save(admin);
                 System.out.println("Admin user created: " + adminEmail);
             }
