@@ -33,8 +33,9 @@ public class AuthController {
         return ResponseEntity.ok("User verified successfully");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
-    }
+   @PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
+    return authService.login(request);
+}
+
 }

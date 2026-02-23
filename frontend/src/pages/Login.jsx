@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock } from 'react-icons/fi';
 import './Login.css';
-
-const API_BASE_URL = 'http://localhost:8080/api/auth';
+import endpoints from '../services/api.js';
 
 
 const Login = () => {
@@ -34,32 +33,51 @@ const Login = () => {
         setLoading(true);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/login`, {
+            const response = await fetch(endpoints.login, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
+            // parse response safely (could be non-JSON)
+            let data = null;
+            let text = null;
+            try {
+                data = await response.json();
+            } catch (jsonErr) {
+                // fallback to text if not JSON
+                try { text = await response.text(); } catch (tErr) { text = null; }
+            }
 
-            const data = await response.json();
+            console.debug('Login response status:', response.status, 'json:', data, 'text:', text);
 
             if (response.ok) {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify({ name: data.name, role: data.role }));
+                // token might be in JSON or in text
+                const tokenValue = data && data.token ? data.token : (text || null);
+                if (tokenValue) {
+                    localStorage.setItem('token', tokenValue);
+                    localStorage.setItem('user', JSON.stringify({ name: data && data.name ? data.name : '', role: data && data.role ? data.role : '' }));
+                }
                 // Navigate to dashboard based on role
-                if (data.role && data.role.toLowerCase() === 'admin') {
+                if (data && data.role && data.role.toLowerCase() === 'admin') {
                     navigate('/dashboard/admin');
-                } else if (data.role && data.role.toLowerCase() === 'professional') {
+                } else if (data && data.role && data.role.toLowerCase() === 'professional') {
                     navigate('/dashboard/professional');
                 } else {
                     navigate('/dashboard/student');
                 }
             } else {
-                if (data.message && data.message.toLowerCase().includes('not found')) {
-                  setError('Email does not exist. Please register first.');
-                } else if (data.message && data.message.toLowerCase().includes('verify')) {
-                  setError('Account not verified. Please check your email for the verification code.');
+                // Backend now returns: "this email is not registered" for missing emails (404)
+                const message = (data && data.message) ? data.message.toString() : (text ? text.toString() : '');
+                const lower = message.toLowerCase();
+
+                if (response.status === 404 || lower.includes('not registered') || lower.includes('this email')) {
+                    setError('This email is not registered');
+                } else if (lower.includes('verify')) {
+                    setError('Account not verified. Please check your email for the verification code.');
+                } else if (lower.includes('incorrect password') || lower.includes('bad credentials') ) {
+                    setError('Incorrect password. Please try again.');
                 } else {
-                  setError(data.message || 'Invalid email or password.');
+                    setError(message || 'Invalid email or password.');
                 }
             }
         } catch (err) {
@@ -121,5 +139,4 @@ const Login = () => {
         </div>
     );
 };
-
 export default Login;

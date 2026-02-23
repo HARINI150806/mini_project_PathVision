@@ -14,12 +14,21 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.pathvision.security.JwtService;
+import com.pathvision.entity.StudentProfile;
+import com.pathvision.repository.StudentProfileRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -29,15 +38,19 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JavaMailSender mailSender;
+    private final JwtService jwtService;
+    private final StudentProfileRepository studentProfileRepository;
 
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JavaMailSender mailSender) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JavaMailSender mailSender, JwtService jwtService, StudentProfileRepository studentProfileRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.mailSender = mailSender;
+        this.jwtService = jwtService;
+        this.studentProfileRepository = studentProfileRepository;
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -132,31 +145,71 @@ public class AuthService {
         }
     }
 
-    public AuthResponse login(LoginRequest request) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-            );
+ public ResponseEntity<?> login(LoginRequest request) {
 
-            var user = userRepository.findByEmail(request.getEmail())
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+    if (!userRepository.existsByEmail(request.getEmail())) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(Map.of("message", "This email is not registered"));
+    }
 
-            if (!user.isEnabled()) {
-                throw new RuntimeException("Account not verified. Please verify your email.");
+    try {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+    } catch (DisabledException ex) {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(Map.of("message", "Account not verified. Please verify your email."));
+
+    } catch (BadCredentialsException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "Incorrect password. Please try again."));
+    }
+
+
+    User user = userRepository.findByEmail(request.getEmail()).get();
+
+    String token;
+    try {
+        token = jwtService.generateToken(user);
+    } catch (Exception ex) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("message", "Failed to generate authentication token", "error", ex.getMessage()));
+    }
+
+    // Create an empty student profile on first successful login for STUDENT role
+    try {
+        if (user.getRole() == Role.STUDENT) {
+            boolean exists = studentProfileRepository.existsByUser(user);
+            if (!exists) {
+                StudentProfile profile = new StudentProfile();
+                profile.setUser(user);
+                // leave other fields null/empty for the user to populate later
+                studentProfileRepository.save(profile);
             }
+        }
+    } catch (Exception ignored) {
+        // don't fail login if profile creation has issues; log if necessary
+        System.err.println("Warning: failed to create student profile: " + ignored.getMessage());
+    }
 
-            // In a real app, use JWT utils
-            String token = "dummy-jwt-token-for-" + user.getId();
-
-            return AuthResponse.builder()
+    return ResponseEntity.ok(
+            AuthResponse.builder()
                     .token(token)
                     .message("Login successful")
                     .role(user.getRole().name())
                     .name(user.getFullName())
-                    .build();
+                    .build()
+    );
+}
 
-        } catch (Exception e) {
-            throw new RuntimeException("Invalid email or password");
-        }
-    }
+
+
 }

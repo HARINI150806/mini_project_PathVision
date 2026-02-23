@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import StudentDashboard from './pages/StudentDashboard';
 import ProfessionalDashboard from './pages/ProfessionalDashboard';
+import StudentProfile from './pages/StudentProfile';
 import './components/layout/Navbar.css';
 import './App.css';
 import { ThemeProvider } from './context/ThemeContext';
@@ -24,6 +25,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/dashboard/admin" element={<AdminDashboard />} />
               <Route path="/dashboard/student" element={<StudentDashboard />} />
+              <Route path="/dashboard/student/profile" element={<StudentProfile />} />
               <Route path="/dashboard/professional" element={<ProfessionalDashboard />} />
               {/* Placeholder routes */}
               <Route path="/assessment" element={<div className="container"><h2>Assessment Page</h2><p>Coming Soon</p></div>} />
