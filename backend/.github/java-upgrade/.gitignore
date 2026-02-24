@@ -24,6 +24,11 @@ target/
 *.class
 *.json
 
+# Application config files
+application.properties
+.env
+
+
 # =========================
 # IDE Files
 # =========================
