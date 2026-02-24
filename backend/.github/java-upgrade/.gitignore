@@ -25,7 +25,7 @@ target/
 *.json
 
 # Application config files
-application.properties
+src/main/resources/application.properties
 .env
 
 
