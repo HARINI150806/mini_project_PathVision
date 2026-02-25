@@ -1,0 +1,721 @@
+2026-02-17T17:10:52.622Z [INFO] Initializing project configuration...
+2026-02-17T17:10:52.623Z [INFO] Project c:\Users\DELL\Desktop\PathVision\backend is a maven project, try to get java version from pom.xml
+2026-02-17T17:10:52.626Z [INFO] Project java version: 17
+2026-02-17T17:10:52.627Z [INFO] Maven project detected.
+2026-02-17T17:10:52.627Z [INFO] Build tool type: mvn
+2026-02-17T17:10:52.648Z [ERROR] JDK is not provided or detected for Java 17.
+2026-02-17T17:13:04.062Z [INFO] [Environment] Running command (Java 17): java -version
+openjdk version "17.0.16" 2025-07-15 LTS
+OpenJDK Runtime Environment Microsoft-11926163 (build 17.0.16+8-LTS)
+OpenJDK 64-Bit Server VM Microsoft-11926163 (build 17.0.16+8-LTS, mixed mode, sharing)
+2026-02-17T17:13:04.759Z [INFO] [JdkEnvironment] Got real Java version: 17.0.16
+2026-02-17T17:13:04.760Z [INFO] JDK: {
+  "name": "java",
+  "path": "C:\\Users\\DELL\\.jdk\\jdk-17.0.16\\bin",
+  "version": "17"
+}
+2026-02-17T17:13:05.000Z [INFO] [Environment] Running command (Java 17): mvn --version
+Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)
+Maven home: C:\Program Files\apache-maven-3.9.11
+Java version: 17.0.16, vendor: Microsoft, runtime: C:\Users\DELL\.jdk\jdk-17.0.16
+Default locale: en_IN, platform encoding: Cp1252
+OS name: "windows 11", version: "10.0", arch: "amd64", family: "windows"
+2026-02-17T17:13:16.518Z [INFO] Real build tool version: 3.9.11
+2026-02-17T17:13:16.519Z [INFO] Build tool: {
+  "name": "mvn",
+  "path": "C:\\Program Files\\apache-maven-3.9.11\\bin",
+  "version": "3.9.11"
+}
+2026-02-17T17:13:16.520Z [INFO] Project config: {
+  "buildTool": {
+    "path": "C:\\Program Files\\apache-maven-3.9.11\\bin",
+    "name": "mvn",
+    "version": "3.9.11"
+  },
+  "jdk": {
+    "path": "C:\\Users\\DELL\\.jdk\\jdk-17.0.16\\bin",
+    "version": "17",
+    "name": "java"
+  },
+  "name": "backend",
+  "dir": "c:\\Users\\DELL\\Desktop\\PathVision\\backend"
+}
+2026-02-17T17:13:16.521Z [INFO] Project configuration initialized: {
+  "buildTool": {
+    "path": "C:\\Program Files\\apache-maven-3.9.11\\bin",
+    "name": "mvn",
+    "version": "3.9.11"
+  },
+  "jdk": {
+    "path": "C:\\Users\\DELL\\.jdk\\jdk-17.0.16\\bin",
+    "version": "17",
+    "name": "java"
+  },
+  "name": "backend",
+  "dir": "c:\\Users\\DELL\\Desktop\\PathVision\\backend"
+}
+2026-02-17T17:13:16.522Z [INFO] Initializing upgrade goals...
+2026-02-17T17:13:16.529Z [INFO] [Environment] Running command (Java 17): mvn dependency:tree -B
+[INFO] Scanning for projects...
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-jar-plugin/3.3.0/maven-jar-plugin-3.3.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-jar-plugin/3.3.0/maven-jar-plugin-3.3.0.pom (6.8 kB at 9.7 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/37/maven-plugins-37.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/37/maven-plugins-37.pom (9.9 kB at 31 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/3.1.2/maven-surefire-plugin-3.1.2.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/3.1.2/maven-surefire-plugin-3.1.2.pom (5.5 kB at 24 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire/3.1.2/surefire-3.1.2.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire/3.1.2/surefire-3.1.2.pom (22 kB at 89 kB/s)
+[WARNING] The POM for org.apache.maven.plugins:maven-surefire-plugin:jar:3.1.2 is invalid, transitive dependencies (if any) will not be available: 1 problem was encountered while building the effective model for org.apache.maven.plugins:maven-surefire-plugin:3.1.2
+[FATAL] Non-readable POM C:\Users\DELL\.m2\repository\org\apache\maven\surefire\surefire\3.1.2\surefire-3.1.2.pom: input contained no data @ C:\Users\DELL\.m2\repository\org\apache\maven\surefire\surefire\3.1.2\surefire-3.1.2.pom
+
+[WARNING] Failed to retrieve plugin descriptor for org.apache.maven.plugins:maven-surefire-plugin:3.1.2: Plugin org.apache.maven.plugins:maven-surefire-plugin:3.1.2 or one of its dependencies could not be resolved:
+	1 problem was encountered while building the effective model for org.apache.maven.plugins:maven-surefire-plugin:3.1.2
+[FATAL] Non-readable POM C:\Users\DELL\.m2\repository\org\apache\maven\surefire\surefire\3.1.2\surefire-3.1.2.pom: input contained no data @ C:\Users\DELL\.m2\repository\org\apache\maven\surefire\surefire\3.1.2\surefire-3.1.2.pom
+
+
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-install-plugin/3.1.1/maven-install-plugin-3.1.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-install-plugin/3.1.1/maven-install-plugin-3.1.1.pom (7.8 kB at 12 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-deploy-plugin/3.1.1/maven-deploy-plugin-3.1.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-deploy-plugin/3.1.1/maven-deploy-plugin-3.1.1.pom (8.9 kB at 12 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/build-helper-maven-plugin/3.4.0/build-helper-maven-plugin-3.4.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/build-helper-maven-plugin/3.4.0/build-helper-maven-plugin-3.4.0.pom (7.6 kB at 35 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/mojo-parent/74/mojo-parent-74.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/mojo-parent/74/mojo-parent-74.pom (36 kB at 53 kB/s)
+[WARNING] The POM for org.codehaus.mojo:build-helper-maven-plugin:jar:3.4.0 is invalid, transitive dependencies (if any) will not be available: 1 problem was encountered while building the effective model for org.codehaus.mojo:build-helper-maven-plugin:3.4.0
+[FATAL] Non-readable POM C:\Users\DELL\.m2\repository\org\codehaus\mojo\mojo-parent\74\mojo-parent-74.pom: no more data available - expected end tags </url></developer></developers></project> to close start tag <url> from line 110 and start tag <developer> from line 107 and start tag <developers> from line 43 and start tag <project> from line 20, parser stopped on START_TAG seen ...</name>\n      <url>https://github.c... @110:28 @ C:\Users\DELL\.m2\repository\org\codehaus\mojo\mojo-parent\74\mojo-parent-74.pom
+
+[WARNING] Failed to retrieve plugin descriptor for org.codehaus.mojo:build-helper-maven-plugin:3.4.0: Plugin org.codehaus.mojo:build-helper-maven-plugin:3.4.0 or one of its dependencies could not be resolved:
+	1 problem was encountered while building the effective model for org.codehaus.mojo:build-helper-maven-plugin:3.4.0
+[FATAL] Non-readable POM C:\Users\DELL\.m2\repository\org\codehaus\mojo\mojo-parent\74\mojo-parent-74.pom: no more data available - expected end tags </url></developer></developers></project> to close start tag <url> from line 110 and start tag <developer> from line 107 and start tag <developers> from line 43 and start tag <project> from line 20, parser stopped on START_TAG seen ...</name>\n      <url>https://github.c... @110:28 @ C:\Users\DELL\.m2\repository\org\codehaus\mojo\mojo-parent\74\mojo-parent-74.pom
+
+
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/flywaydb/flyway-maven-plugin/9.22.3/flyway-maven-plugin-9.22.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/flywaydb/flyway-maven-plugin/9.22.3/flyway-maven-plugin-9.22.3.pom (4.4 kB at 14 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/flywaydb/flyway-parent/9.22.3/flyway-parent-9.22.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/flywaydb/flyway-parent/9.22.3/flyway-parent-9.22.3.pom (35 kB at 62 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/flywaydb/flyway-maven-plugin/9.22.3/flyway-maven-plugin-9.22.3.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/flywaydb/flyway-maven-plugin/9.22.3/flyway-maven-plugin-9.22.3.jar (112 kB at 18 kB/s)
+[INFO] 
+[INFO] -----------------------< com.pathvision:backend >-----------------------
+[INFO] Building PathVision Backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.6.1:tree (default-cli) @ backend ---
+[INFO] com.pathvision:backend:jar:0.0.1-SNAPSHOT
+[INFO] +- org.springframework.boot:spring-boot-starter-data-jpa:jar:3.2.3:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-aop:jar:3.2.3:compile
+[INFO] |  |  \- org.aspectj:aspectjweaver:jar:1.9.21:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-jdbc:jar:3.2.3:compile
+[INFO] |  |  +- com.zaxxer:HikariCP:jar:5.0.1:compile
+[INFO] |  |  \- org.springframework:spring-jdbc:jar:6.1.4:compile
+[INFO] |  +- org.hibernate.orm:hibernate-core:jar:6.4.4.Final:compile
+[INFO] |  |  +- jakarta.persistence:jakarta.persistence-api:jar:3.1.0:compile
+[INFO] |  |  +- jakarta.transaction:jakarta.transaction-api:jar:2.0.1:compile
+[INFO] |  |  +- org.jboss.logging:jboss-logging:jar:3.5.3.Final:compile
+[INFO] |  |  +- org.hibernate.common:hibernate-commons-annotations:jar:6.0.6.Final:runtime
+[INFO] |  |  +- io.smallrye:jandex:jar:3.1.2:runtime
+[INFO] |  |  +- com.fasterxml:classmate:jar:1.6.0:compile
+[INFO] |  |  +- net.bytebuddy:byte-buddy:jar:1.14.12:runtime
+[INFO] |  |  +- org.glassfish.jaxb:jaxb-runtime:jar:4.0.4:runtime
+[INFO] |  |  |  \- org.glassfish.jaxb:jaxb-core:jar:4.0.4:runtime
+[INFO] |  |  |     +- org.eclipse.angus:angus-activation:jar:2.0.1:runtime
+[INFO] |  |  |     +- org.glassfish.jaxb:txw2:jar:4.0.4:runtime
+[INFO] |  |  |     \- com.sun.istack:istack-commons-runtime:jar:4.1.2:runtime
+[INFO] |  |  +- jakarta.inject:jakarta.inject-api:jar:2.0.1:runtime
+[INFO] |  |  \- org.antlr:antlr4-runtime:jar:4.13.0:compile
+[INFO] |  +- org.springframework.data:spring-data-jpa:jar:3.2.3:compile
+[INFO] |  |  +- org.springframework.data:spring-data-commons:jar:3.2.3:compile
+[INFO] |  |  +- org.springframework:spring-orm:jar:6.1.4:compile
+[INFO] |  |  +- org.springframework:spring-context:jar:6.1.4:compile
+[INFO] |  |  +- org.springframework:spring-tx:jar:6.1.4:compile
+[INFO] |  |  +- org.springframework:spring-beans:jar:6.1.4:compile
+[INFO] |  |  +- jakarta.annotation:jakarta.annotation-api:jar:2.1.1:compile
+[INFO] |  |  \- org.slf4j:slf4j-api:jar:2.0.12:compile
+[INFO] |  \- org.springframework:spring-aspects:jar:6.1.4:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-web:jar:3.2.3:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter:jar:3.2.3:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot:jar:3.2.3:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-autoconfigure:jar:3.2.3:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-logging:jar:3.2.3:compile
+[INFO] |  |  |  +- ch.qos.logback:logback-classic:jar:1.4.14:compile
+[INFO] |  |  |  |  \- ch.qos.logback:logback-core:jar:1.4.14:compile
+[INFO] |  |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.21.1:compile
+[INFO] |  |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.21.1:compile
+[INFO] |  |  |  \- org.slf4j:jul-to-slf4j:jar:2.0.12:compile
+[INFO] |  |  \- org.yaml:snakeyaml:jar:2.2:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-json:jar:3.2.3:compile
+[INFO] |  |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.15.4:compile
+[INFO] |  |  |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.15.4:compile
+[INFO] |  |  |  \- com.fasterxml.jackson.core:jackson-core:jar:2.15.4:compile
+[INFO] |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.15.4:compile
+[INFO] |  |  +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.15.4:compile
+[INFO] |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.15.4:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-tomcat:jar:3.2.3:compile
+[INFO] |  |  +- org.apache.tomcat.embed:tomcat-embed-core:jar:10.1.19:compile
+[INFO] |  |  \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:10.1.19:compile
+[INFO] |  +- org.springframework:spring-web:jar:6.1.4:compile
+[INFO] |  |  \- io.micrometer:micrometer-observation:jar:1.12.3:compile
+[INFO] |  |     \- io.micrometer:micrometer-commons:jar:1.12.3:compile
+[INFO] |  \- org.springframework:spring-webmvc:jar:6.1.4:compile
+[INFO] |     \- org.springframework:spring-expression:jar:6.1.4:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-validation:jar:3.2.3:compile
+[INFO] |  +- org.apache.tomcat.embed:tomcat-embed-el:jar:10.1.19:compile
+[INFO] |  \- org.hibernate.validator:hibernate-validator:jar:8.0.1.Final:compile
+[INFO] |     \- jakarta.validation:jakarta.validation-api:jar:3.0.2:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-security:jar:3.2.3:compile
+[INFO] |  +- org.springframework:spring-aop:jar:6.1.4:compile
+[INFO] |  +- org.springframework.security:spring-security-config:jar:6.2.2:compile
+[INFO] |  |  \- org.springframework.security:spring-security-core:jar:6.2.2:compile
+[INFO] |  |     \- org.springframework.security:spring-security-crypto:jar:6.2.2:compile
+[INFO] |  \- org.springframework.security:spring-security-web:jar:6.2.2:compile
+[INFO] +- com.mysql:mysql-connector-j:jar:8.3.0:runtime
+[INFO] +- org.projectlombok:lombok:jar:1.18.30:compile
+[INFO] \- org.springframework.boot:spring-boot-starter-test:jar:3.2.3:test
+[INFO]    +- org.springframework.boot:spring-boot-test:jar:3.2.3:test
+[INFO]    +- org.springframework.boot:spring-boot-test-autoconfigure:jar:3.2.3:test
+[INFO]    +- com.jayway.jsonpath:json-path:jar:2.9.0:test
+[INFO]    +- jakarta.xml.bind:jakarta.xml.bind-api:jar:4.0.1:runtime
+[INFO]    |  \- jakarta.activation:jakarta.activation-api:jar:2.1.2:runtime
+[INFO]    +- net.minidev:json-smart:jar:2.5.0:test
+[INFO]    |  \- net.minidev:accessors-smart:jar:2.5.0:test
+[INFO]    |     \- org.ow2.asm:asm:jar:9.3:test
+[INFO]    +- org.assertj:assertj-core:jar:3.24.2:test
+[INFO]    +- org.awaitility:awaitility:jar:4.2.0:test
+[INFO]    +- org.hamcrest:hamcrest:jar:2.2:test
+[INFO]    +- org.junit.jupiter:junit-jupiter:jar:5.10.2:test
+[INFO]    |  +- org.junit.jupiter:junit-jupiter-api:jar:5.10.2:test
+[INFO]    |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO]    |  |  +- org.junit.platform:junit-platform-commons:jar:1.10.2:test
+[INFO]    |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO]    |  +- org.junit.jupiter:junit-jupiter-params:jar:5.10.2:test
+[INFO]    |  \- org.junit.jupiter:junit-jupiter-engine:jar:5.10.2:test
+[INFO]    |     \- org.junit.platform:junit-platform-engine:jar:1.10.2:test
+[INFO]    +- org.mockito:mockito-core:jar:5.7.0:test
+[INFO]    |  +- net.bytebuddy:byte-buddy-agent:jar:1.14.12:test
+[INFO]    |  \- org.objenesis:objenesis:jar:3.3:test
+[INFO]    +- org.mockito:mockito-junit-jupiter:jar:5.7.0:test
+[INFO]    +- org.skyscreamer:jsonassert:jar:1.5.1:test
+[INFO]    |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO]    +- org.springframework:spring-core:jar:6.1.4:compile
+[INFO]    |  \- org.springframework:spring-jcl:jar:6.1.4:compile
+[INFO]    +- org.springframework:spring-test:jar:6.1.4:test
+[INFO]    \- org.xmlunit:xmlunit-core:jar:2.9.1:test
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  36.463 s
+[INFO] Finished at: 2026-02-17T22:43:55+05:30
+[INFO] ------------------------------------------------------------------------
+2026-02-17T17:13:55.520Z [INFO] [MavenBuildTool] Successfully got dependency tree of c:\Users\DELL\Desktop\PathVision\backend
+2026-02-17T17:13:55.522Z [INFO] [MavenBuildTool] Getting Java version of c:\Users\DELL\Desktop\PathVision\backend from pom.xml
+2026-02-17T17:13:55.523Z [INFO] [MavenBuildTool] Searching for pom.xml files in c:\Users\DELL\Desktop\PathVision\backend
+2026-02-17T17:13:55.524Z [INFO] [MavenBuildTool] Getting all module coordinates of c:\Users\DELL\Desktop\PathVision\backend
+2026-02-17T17:13:55.525Z [INFO] [MavenBuildTool] Getting effective POMs of c:\Users\DELL\Desktop\PathVision\backend
+2026-02-17T17:13:55.525Z [INFO] [Environment] Running command (Java 17): mvn help:effective-pom -Doutput=effective-pom-a2be2c31-c18f-4d26-a73a-859afbb77027.log
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.pathvision:backend >-----------------------
+[INFO] Building PathVision Backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- help:3.4.0:effective-pom (default-cli) @ backend ---
+[INFO] Effective-POM written to: c:\Users\DELL\Desktop\PathVision\backend\effective-pom-a2be2c31-c18f-4d26-a73a-859afbb77027.log
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.749 s
+[INFO] Finished at: 2026-02-17T22:43:59+05:30
+[INFO] ------------------------------------------------------------------------
+2026-02-17T17:13:59.702Z [INFO] [MavenBuildTool] Found pom.xml files: c:\Users\DELL\Desktop\PathVision\backend\pom.xml
+2026-02-17T17:13:59.705Z [INFO] [MavenBuildTool] Java version found in c:\Users\DELL\Desktop\PathVision\backend\pom.xml: 17
+2026-02-17T17:13:59.705Z [INFO] Source Java version: 17
+2026-02-17T17:13:59.706Z [INFO] validateAndUpdateTargets, targets: [object Object]
+2026-02-17T17:13:59.707Z [INFO] No target dependencies found for Spring Boot. Skipping target dependency validation
+2026-02-17T17:13:59.707Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Spring Boot
+2026-02-17T17:13:59.707Z [WARN] No source dependencies found for Spring Framework. Skipping target dependency validation
+2026-02-17T17:13:59.708Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Spring Framework
+2026-02-17T17:13:59.708Z [WARN] No source dependencies found for Spring Security. Skipping target dependency validation
+2026-02-17T17:13:59.708Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Spring Security
+2026-02-17T17:13:59.709Z [WARN] No source dependencies found for Jakarta EE. Skipping target dependency validation
+2026-02-17T17:13:59.709Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Jakarta EE
+2026-02-17T17:13:59.710Z [WARN] No source dependencies found for JUnit. Skipping target dependency validation
+2026-02-17T17:13:59.710Z [INFO] validateAndUpdateTargets, targets: [object Object], group:JUnit
+2026-02-17T17:13:59.711Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Java
+2026-02-17T17:13:59.711Z [INFO] validateAndUpdateTargets, userTargets: [object Object]
+2026-02-17T17:13:59.711Z [INFO] initUpgradeGoal, targetDeps: [object Object]
+2026-02-17T17:13:59.712Z [INFO] Upgrade goal initialized: [
+  {
+    "name": "Java",
+    "groupId": "java",
+    "artifactId": "*",
+    "version": "21",
+    "recipes": [
+      {
+        "id": "com.microsoft.java.UpgradeToJava21",
+        "name": "Upgrade from Java 8 to Java 21",
+        "description": "Migrate Java 8 to Java 21.",
+        "url": "https://docs.openrewrite.org/recipes/java/migrate/UpgradeToJava21",
+        "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.UpgradeToJava21` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 21 from any previous version larger than Java 8.\n"
+      }
+    ],
+    "supportedSources": [
+      {
+        "groupId": "java",
+        "artifactId": "*",
+        "version": ">=8 <21"
+      },
+      {
+        "name": "Java",
+        "groupId": "java",
+        "artifactId": "*",
+        "version": "11",
+        "recipes": [
+          {
+            "id": "com.microsoft.java.UpgradeToJava11",
+            "name": "Upgrade from Java 8 to Java 11",
+            "description": "Migrate Java 8 to Java 11.",
+            "url": "https://docs.openrewrite.org/recipes/java/migrate/java8tojava11",
+            "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.Java8toJava11` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 11 from any previous version larger than Java 8.\n"
+          }
+        ],
+        "supportedSources": [
+          {
+            "groupId": "java",
+            "artifactId": "*",
+            "version": ">=8 <11"
+          }
+        ],
+        "effects": [
+          {
+            "groupId": "java",
+            "artifactId": "*",
+            "version": "11"
+          }
+        ]
+      },
+      {
+        "name": "Java",
+        "groupId": "java",
+        "artifactId": "*",
+        "version": "17",
+        "recipes": [
+          {
+            "id": "com.microsoft.java.UpgradeToJava17",
+            "name": "Upgrade from Java 8 to Java 17",
+            "description": "Migrate Java 8 to Java 17.",
+            "url": "https://docs.openrewrite.org/recipes/java/migrate/UpgradeToJava17",
+            "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.UpgradeToJava17` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 17 from any previous version larger than Java 8.\n"
+          }
+        ],
+        "supportedSources": [
+          {
+            "groupId": "java",
+            "artifactId": "*",
+            "version": ">=8 <17"
+          },
+          {
+            "name": "Java",
+            "groupId": "java",
+            "artifactId": "*",
+            "version": "11",
+            "recipes": [
+              {
+                "id": "com.microsoft.java.UpgradeToJava11",
+                "name": "Upgrade from Java 8 to Java 11",
+                "description": "Migrate Java 8 to Java 11.",
+                "url": "https://docs.openrewrite.org/recipes/java/migrate/java8tojava11",
+                "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.Java8toJava11` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 11 from any previous version larger than Java 8.\n"
+              }
+            ],
+            "supportedSources": [
+              {
+                "groupId": "java",
+                "artifactId": "*",
+                "version": ">=8 <11"
+              }
+            ],
+            "effects": [
+              {
+                "groupId": "java",
+                "artifactId": "*",
+                "version": "11"
+              }
+            ]
+          }
+        ],
+        "effects": [
+          {
+            "groupId": "java",
+            "artifactId": "*",
+            "version": "17"
+          }
+        ]
+      }
+    ],
+    "effects": [
+      {
+        "groupId": "java",
+        "artifactId": "*",
+        "version": "21"
+      }
+    ]
+  }
+]
+2026-02-17T17:13:59.712Z [INFO] Initializing upgrade options...
+2026-02-17T17:13:59.712Z [INFO] Source Java version: 17
+2026-02-17T17:13:59.713Z [INFO] Source JDK: {"name":"java","path":"C:\\Users\\DELL\\.jdk\\jdk-17.0.16\\bin","version":"17"}
+2026-02-17T17:13:59.713Z [INFO] Target Java version: 21
+2026-02-17T17:13:59.806Z [INFO] Target JDK: {"name":"java","path":"C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.8.9-hotspot\\bin","version":"21.0.8","source":"PATH"}
+2026-02-17T17:13:59.807Z [INFO] Build tool type detected from path: mvn
+2026-02-17T17:13:59.807Z [INFO] Build tool type: mvn
+2026-02-17T17:13:59.807Z [INFO] Build tool: {"name":"mvn","path":"C:\\Program Files\\apache-maven-3.9.11\\bin","version":""}
+2026-02-17T17:13:59.808Z [INFO] Working branch: appmod/java-upgrade-20260217171052
+2026-02-17T17:13:59.808Z [INFO] Upgrade options initialized: {
+  "target": {
+    "jdk": {
+      "name": "java",
+      "path": "C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.8.9-hotspot\\bin",
+      "version": "21.0.8",
+      "source": "PATH"
+    },
+    "dependencies": [
+      {
+        "name": "Java",
+        "groupId": "java",
+        "artifactId": "*",
+        "version": "21",
+        "recipes": [
+          {
+            "id": "com.microsoft.java.UpgradeToJava21",
+            "name": "Upgrade from Java 8 to Java 21",
+            "description": "Migrate Java 8 to Java 21.",
+            "url": "https://docs.openrewrite.org/recipes/java/migrate/UpgradeToJava21",
+            "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.UpgradeToJava21` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 21 from any previous version larger than Java 8.\n"
+          }
+        ],
+        "supportedSources": [
+          {
+            "groupId": "java",
+            "artifactId": "*",
+            "version": ">=8 <21"
+          },
+          {
+            "name": "Java",
+            "groupId": "java",
+            "artifactId": "*",
+            "version": "11",
+            "recipes": [
+              {
+                "id": "com.microsoft.java.UpgradeToJava11",
+                "name": "Upgrade from Java 8 to Java 11",
+                "description": "Migrate Java 8 to Java 11.",
+                "url": "https://docs.openrewrite.org/recipes/java/migrate/java8tojava11",
+                "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.Java8toJava11` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 11 from any previous version larger than Java 8.\n"
+              }
+            ],
+            "supportedSources": [
+              {
+                "groupId": "java",
+                "artifactId": "*",
+                "version": ">=8 <11"
+              }
+            ],
+            "effects": [
+              {
+                "groupId": "java",
+                "artifactId": "*",
+                "version": "11"
+              }
+            ]
+          },
+          {
+            "name": "Java",
+            "groupId": "java",
+            "artifactId": "*",
+            "version": "17",
+            "recipes": [
+              {
+                "id": "com.microsoft.java.UpgradeToJava17",
+                "name": "Upgrade from Java 8 to Java 17",
+                "description": "Migrate Java 8 to Java 17.",
+                "url": "https://docs.openrewrite.org/recipes/java/migrate/UpgradeToJava17",
+                "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.UpgradeToJava17` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 17 from any previous version larger than Java 8.\n"
+              }
+            ],
+            "supportedSources": [
+              {
+                "groupId": "java",
+                "artifactId": "*",
+                "version": ">=8 <17"
+              },
+              {
+                "name": "Java",
+                "groupId": "java",
+                "artifactId": "*",
+                "version": "11",
+                "recipes": [
+                  {
+                    "id": "com.microsoft.java.UpgradeToJava11",
+                    "name": "Upgrade from Java 8 to Java 11",
+                    "description": "Migrate Java 8 to Java 11.",
+                    "url": "https://docs.openrewrite.org/recipes/java/migrate/java8tojava11",
+                    "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.Java8toJava11` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 11 from any previous version larger than Java 8.\n"
+                  }
+                ],
+                "supportedSources": [
+                  {
+                    "groupId": "java",
+                    "artifactId": "*",
+                    "version": ">=8 <11"
+                  }
+                ],
+                "effects": [
+                  {
+                    "groupId": "java",
+                    "artifactId": "*",
+                    "version": "11"
+                  }
+                ]
+              }
+            ],
+            "effects": [
+              {
+                "groupId": "java",
+                "artifactId": "*",
+                "version": "17"
+              }
+            ]
+          }
+        ],
+        "effects": [
+          {
+            "groupId": "java",
+            "artifactId": "*",
+            "version": "21"
+          }
+        ]
+      }
+    ],
+    "buildTool": {
+      "name": "mvn",
+      "path": "C:\\Program Files\\apache-maven-3.9.11\\bin",
+      "version": ""
+    }
+  },
+  "workingBranch": "appmod/java-upgrade-20260217171052",
+  "runTests": true
+}
+2026-02-17T17:13:59.809Z [INFO] Project dependencies loaded: [
+  "org.springframework.boot:spring-boot-starter-data-jpa:3.2.3:jar",
+  "org.springframework.boot:spring-boot-starter-web:3.2.3:jar",
+  "org.springframework.boot:spring-boot-starter-validation:3.2.3:jar",
+  "org.springframework.boot:spring-boot-starter-security:3.2.3:jar",
+  "com.mysql:mysql-connector-j:8.3.0:jar",
+  "org.projectlombok:lombok:1.18.30:jar",
+  "org.springframework.boot:spring-boot-starter-test:3.2.3:jar"
+]
+2026-02-17T17:13:59.811Z [INFO] Project modules loaded: [
+  "com.pathvision:backend:0.0.1-SNAPSHOT"
+]
+2026-02-17T17:13:59.812Z [INFO] done initializing context.
+2026-02-17T17:13:59.813Z [INFO] Source dependencies: [
+  {
+    "groupId": "org.springframework.boot",
+    "artifactId": "spring-boot-starter-data-jpa",
+    "type": "jar",
+    "version": "3.2.3",
+    "scope": "compile",
+    "module": "backend"
+  },
+  {
+    "groupId": "org.springframework.boot",
+    "artifactId": "spring-boot-starter-web",
+    "type": "jar",
+    "version": "3.2.3",
+    "scope": "compile",
+    "module": "backend"
+  },
+  {
+    "groupId": "org.springframework.boot",
+    "artifactId": "spring-boot-starter-validation",
+    "type": "jar",
+    "version": "3.2.3",
+    "scope": "compile",
+    "module": "backend"
+  },
+  {
+    "groupId": "org.springframework.boot",
+    "artifactId": "spring-boot-starter-security",
+    "type": "jar",
+    "version": "3.2.3",
+    "scope": "compile",
+    "module": "backend"
+  },
+  {
+    "groupId": "com.mysql",
+    "artifactId": "mysql-connector-j",
+    "type": "jar",
+    "version": "8.3.0",
+    "scope": "runtime",
+    "module": "backend"
+  },
+  {
+    "groupId": "org.projectlombok",
+    "artifactId": "lombok",
+    "type": "jar",
+    "version": "1.18.30",
+    "scope": "compile",
+    "module": "backend"
+  },
+  {
+    "groupId": "org.springframework.boot",
+    "artifactId": "spring-boot-starter-test",
+    "type": "jar",
+    "version": "3.2.3",
+    "scope": "test",
+    "module": "backend"
+  },
+  {
+    "groupId": "java",
+    "artifactId": "*",
+    "version": "17"
+  }
+]
+2026-02-17T17:13:59.815Z [INFO] validateAndUpdateTargets, targets: [object Object]
+2026-02-17T17:13:59.816Z [INFO] No target dependencies found for Spring Boot. Skipping target dependency validation
+2026-02-17T17:13:59.816Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Spring Boot
+2026-02-17T17:13:59.816Z [WARN] No source dependencies found for Spring Framework. Skipping target dependency validation
+2026-02-17T17:13:59.817Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Spring Framework
+2026-02-17T17:13:59.817Z [WARN] No source dependencies found for Spring Security. Skipping target dependency validation
+2026-02-17T17:13:59.818Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Spring Security
+2026-02-17T17:13:59.819Z [WARN] No source dependencies found for Jakarta EE. Skipping target dependency validation
+2026-02-17T17:13:59.819Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Jakarta EE
+2026-02-17T17:13:59.820Z [WARN] No source dependencies found for JUnit. Skipping target dependency validation
+2026-02-17T17:13:59.821Z [INFO] validateAndUpdateTargets, targets: [object Object], group:JUnit
+2026-02-17T17:13:59.822Z [INFO] validateAndUpdateTargets, targets: [object Object], group:Java
+2026-02-17T17:13:59.824Z [INFO] validateAndUpdateTargets, userTargets: [object Object]
+2026-02-17T17:13:59.825Z [INFO] Upgrade route: upgrade `Java` to *21* with oneStepOneFramework=false
+2026-02-17T17:13:59.826Z [INFO] Upgrade route planned: [
+  [
+    {
+      "name": "Java",
+      "groupId": "java",
+      "artifactId": "*",
+      "version": "21",
+      "recipes": [
+        {
+          "id": "com.microsoft.java.UpgradeToJava21",
+          "name": "Upgrade from Java 8 to Java 21",
+          "description": "Migrate Java 8 to Java 21.",
+          "url": "https://docs.openrewrite.org/recipes/java/migrate/UpgradeToJava21",
+          "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.UpgradeToJava21` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 21 from any previous version larger than Java 8.\n"
+        }
+      ],
+      "supportedSources": [
+        {
+          "groupId": "java",
+          "artifactId": "*",
+          "version": ">=8 <21"
+        },
+        {
+          "name": "Java",
+          "groupId": "java",
+          "artifactId": "*",
+          "version": "11",
+          "recipes": [
+            {
+              "id": "com.microsoft.java.UpgradeToJava11",
+              "name": "Upgrade from Java 8 to Java 11",
+              "description": "Migrate Java 8 to Java 11.",
+              "url": "https://docs.openrewrite.org/recipes/java/migrate/java8tojava11",
+              "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.Java8toJava11` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 11 from any previous version larger than Java 8.\n"
+            }
+          ],
+          "supportedSources": [
+            {
+              "groupId": "java",
+              "artifactId": "*",
+              "version": ">=8 <11"
+            }
+          ],
+          "effects": [
+            {
+              "groupId": "java",
+              "artifactId": "*",
+              "version": "11"
+            }
+          ]
+        },
+        {
+          "name": "Java",
+          "groupId": "java",
+          "artifactId": "*",
+          "version": "17",
+          "recipes": [
+            {
+              "id": "com.microsoft.java.UpgradeToJava17",
+              "name": "Upgrade from Java 8 to Java 17",
+              "description": "Migrate Java 8 to Java 17.",
+              "url": "https://docs.openrewrite.org/recipes/java/migrate/UpgradeToJava17",
+              "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.UpgradeToJava17` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 17 from any previous version larger than Java 8.\n"
+            }
+          ],
+          "supportedSources": [
+            {
+              "groupId": "java",
+              "artifactId": "*",
+              "version": ">=8 <17"
+            },
+            {
+              "name": "Java",
+              "groupId": "java",
+              "artifactId": "*",
+              "version": "11",
+              "recipes": [
+                {
+                  "id": "com.microsoft.java.UpgradeToJava11",
+                  "name": "Upgrade from Java 8 to Java 11",
+                  "description": "Migrate Java 8 to Java 11.",
+                  "url": "https://docs.openrewrite.org/recipes/java/migrate/java8tojava11",
+                  "content": "\n- Apply OpenRewrite recipe `org.openrewrite.java.migrate.Java8toJava11` in recipe lib `org.openrewrite.recipe:rewrite-migrate-java:2.31.1` to make initial code changes for upgrading Java project to Java 11 from any previous version larger than Java 8.\n"
+                }
+              ],
+              "supportedSources": [
+                {
+                  "groupId": "java",
+                  "artifactId": "*",
+                  "version": ">=8 <11"
+                }
+              ],
+              "effects": [
+                {
+                  "groupId": "java",
+                  "artifactId": "*",
+                  "version": "11"
+                }
+              ]
+            }
+          ],
+          "effects": [
+            {
+              "groupId": "java",
+              "artifactId": "*",
+              "version": "17"
+            }
+          ]
+        }
+      ],
+      "effects": [
+        {
+          "groupId": "java",
+          "artifactId": "*",
+          "version": "21"
+        }
+      ]
+    }
+  ]
+]
+2026-02-17T17:13:59.976Z [ERROR] fatal: not a git repository (or any of the parent directories): .git
+
