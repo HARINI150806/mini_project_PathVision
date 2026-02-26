@@ -1,0 +1,238 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+}
+
+:root {
+  /* Light Theme Variables */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --accent-color: var(--primary-color);
+  --border-color: #e2e8f0;
+  --border-input: #cbd5e1;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-md: var(--card-shadow);
+  --button-text: #ffffff;
+  --radius: 0.5rem;
+}
+
+[data-theme='dark'] {
+  /* Dark Theme Variables */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #1e293b;
+  --bg-input: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --primary-color: #60a5fa;
+  --primary-hover: #3b82f6;
+  --accent-color: var(--primary-color);
+  --border-color: #334155;
+  --border-input: #475569;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-md: var(--card-shadow);
+  --button-text: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.3s;
+}
+
+button:hover {
+  border-color: var(--primary-color);
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-up {
+  animation: revealUp 0.7s ease both;
+}
+
+.delay-1 {
+  animation-delay: 0.1s;
+}
+
+.delay-2 {
+  animation-delay: 0.2s;
+}
+
+.delay-3 {
+  animation-delay: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up,
+  .delay-1,
+  .delay-2,
+  .delay-3 {
+    animation: none !important;
+  }
+}
+
+@keyframes heroFloat {
+  0%, 100% {
+    transform: translate3d(calc(var(--mx, 0px) * var(--fx, 0.2)), calc(var(--my, 0px) * var(--fy, 0.2)), 0) rotate(var(--rot, 0deg));
+  }
+  50% {
+    transform: translate3d(calc(var(--mx, 0px) * var(--fx, 0.2)), calc((var(--my, 0px) * var(--fy, 0.2)) - 18px), 0) rotate(calc(var(--rot, 0deg) + 2deg));
+  }
+}
+
+@keyframes heroDrift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+}
+
+@keyframes heroPulse {
+  0%, 100% {
+    opacity: 0.22;
+    transform: translate3d(calc(var(--mx, 0px) * var(--fx, 0.08)), calc(var(--my, 0px) * var(--fy, 0.08)), 0) scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: translate3d(calc(var(--mx, 0px) * var(--fx, 0.08)), calc(var(--my, 0px) * var(--fy, 0.08)), 0) scale(1.08);
+  }
+}
+
+.edu-float,
+.hero-blob {
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.edu-float {
+  color: rgba(226, 232, 240, 0.28);
+  filter: drop-shadow(0 10px 14px rgba(8, 23, 56, 0.15));
+  animation: heroFloat 8s ease-in-out infinite;
+}
+
+.edu-float svg {
+  display: block;
+}
+
+.edu-book-1 {
+  left: 12%;
+  top: 20%;
+  font-size: 3.4rem;
+  --rot: -20deg;
+  --fx: 0.55;
+  --fy: 0.4;
+}
+
+.edu-book-2 {
+  right: 16%;
+  top: 52%;
+  font-size: 4rem;
+  --rot: 22deg;
+  --fx: -0.45;
+  --fy: -0.35;
+  animation-delay: 1.3s;
+}
+
+.edu-pencil {
+  left: 35%;
+  top: 14%;
+  font-size: 3rem;
+  --rot: 32deg;
+  --fx: 0.35;
+  --fy: -0.45;
+  animation-delay: 2s;
+}
+
+.edu-cap {
+  right: 34%;
+  top: 34%;
+  font-size: 3.2rem;
+  --rot: -14deg;
+  --fx: -0.25;
+  --fy: 0.35;
+  animation-delay: 2.6s;
+}
+
+.edu-ruler {
+  right: 10%;
+  top: 18%;
+  font-size: 2.7rem;
+  --rot: 38deg;
+  --fx: -0.5;
+  --fy: 0.25;
+  animation-delay: 3.1s;
+}
+
+.hero-blob {
+  border-radius: 999px;
+  filter: blur(60px);
+  opacity: 0.2;
+  animation: heroPulse 8s ease-in-out infinite;
+}
+
+.hero-blob-1 {
+  left: 4%;
+  bottom: 0;
+  width: 220px;
+  height: 220px;
+  background: rgba(16, 185, 129, 0.42);
+  --fx: 0.22;
+  --fy: -0.18;
+}
+
+.hero-blob-2 {
+  right: -30px;
+  bottom: 8%;
+  width: 260px;
+  height: 260px;
+  background: rgba(251, 191, 36, 0.32);
+  --fx: -0.28;
+  --fy: 0.2;
+  animation-delay: 2s;
+}
+
+@media (max-width: 900px) {
+  .edu-pencil,
+  .edu-ruler {
+    display: none;
+  }
+}
