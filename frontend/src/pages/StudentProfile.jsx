@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import endpoints from '../services/api.js';
+import StudentSidebar from '../components/layout/StudentSidebar';
 import styles from './StudentProfile.module.css';
 
 const initial = {
@@ -13,8 +14,38 @@ const initial = {
   stream: '',
 };
 
+const interestGroups = [
+  {
+    title: 'Engineering Interests',
+    items: [
+      { label: 'CSE / IT', value: 'engineering_cse_it' },
+      { label: 'ECE / EEE', value: 'engineering_ece_eee' },
+      { label: 'Mechanical / Automobile', value: 'engineering_mech_auto' },
+      { label: 'Civil / Architecture', value: 'engineering_civil_arch' },
+      { label: 'AI / Data Science', value: 'engineering_ai_ds' },
+      { label: 'Biomedical / Biotech', value: 'engineering_biomedical_biotech' },
+    ],
+  },
+  {
+    title: 'Arts & Science Interests',
+    items: [
+      { label: 'Mathematics / Physics', value: 'arts_science_math_physics' },
+      { label: 'Chemistry / Life Sciences', value: 'arts_science_chem_life' },
+      { label: 'Computer Science', value: 'arts_science_computer_science' },
+      { label: 'Commerce / BBA', value: 'arts_science_commerce_bba' },
+      { label: 'English / History / Economics', value: 'arts_science_humanities' },
+      { label: 'Visual Media / Psychology', value: 'arts_science_media_psychology' },
+    ],
+  },
+];
+
+const interestLabelByValue = Object.fromEntries(
+  interestGroups.flatMap((group) => group.items.map((item) => [item.value, item.label]))
+);
+
 export default function StudentProfile() {
   const [form, setForm] = useState(initial);
+  const [selectedInterests, setSelectedInterests] = useState([]);
   const [file, setFile] = useState(null);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -42,6 +73,7 @@ export default function StudentProfile() {
               phone: data.phone || '',
               stream: data.stream || '',
             });
+            setSelectedInterests(data.interestsJson ? JSON.parse(data.interestsJson) : []);
           }
         }
       } catch (e) {
@@ -52,6 +84,14 @@ export default function StudentProfile() {
   }, []);
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const toggleInterest = (interestValue) => {
+    setSelectedInterests((prev) => {
+      const exists = prev.includes(interestValue);
+      const next = exists ? prev.filter((item) => item !== interestValue) : [...prev, interestValue];
+      setForm((current) => ({ ...current, interests: next.join(', ') }));
+      return next;
+    });
+  };
 
   // Disable manual file upload
   const onFile = (e) => {
@@ -74,7 +114,7 @@ export default function StudentProfile() {
   };
 
   const validate = () => {
-    if (!form.interests || form.interests.trim().length === 0) return 'Please enter at least one interest';
+    if (!selectedInterests.length) return 'Please select at least one interest';
     if (!form.phone || !/^\d{10}$/.test(form.phone)) return 'Enter a valid 10-digit phone number';
     if (!form.city || !form.state) return 'City and state are required';
     return null;
@@ -90,7 +130,7 @@ export default function StudentProfile() {
     if (!token) return setMessage('Not authenticated');
 
     const fd = new FormData();
-    fd.append('interests', JSON.stringify(form.interests.split(',').map(s => s.trim()).filter(Boolean)));
+    fd.append('interests', JSON.stringify(selectedInterests));
     fd.append('addressLine', form.addressLine);
     fd.append('city', form.city);
     fd.append('state', form.state);
@@ -140,24 +180,74 @@ export default function StudentProfile() {
   };
 
   return (
-    <div className={styles['profile-container']}>
+    <div className={styles['profile-page']}>
+      <StudentSidebar activeLabel="Edit/View Profile" />
+      <div className={styles['profile-main']}>
       <div className={styles['profile-card']}>
         <h2>Student Profile</h2>
         {message && <div className={styles['profile-alert']}>{message}</div>}
         <form onSubmit={handleSubmit} className={styles['profile-form']}>
-          <label>Interests (comma separated)</label>
-          <input name="interests" value={form.interests} onChange={onChange} />
+          <label>Interests after 10th/12th (select one or more)</label>
+          <p className={styles['interest-help']}>Click once to select, click again to unselect.</p>
+          <div className={styles['selected-interest-box']}>
+            <div className={styles['selected-interest-header']}>
+              <span>Selected Interests</span>
+              <span>{selectedInterests.length}</span>
+            </div>
+            {selectedInterests.length > 0 ? (
+              <div className={styles['selected-interest-list']}>
+                {selectedInterests.map((interestValue) => (
+                  <button
+                    key={interestValue}
+                    type="button"
+                    className={styles['selected-interest-chip']}
+                    onClick={() => toggleInterest(interestValue)}
+                  >
+                    {interestLabelByValue[interestValue] || interestValue}
+                    <span className={styles['selected-interest-remove']}>x</span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className={styles['selected-interest-empty']}>No interests selected yet.</p>
+            )}
+          </div>
+          <div className={styles['interest-group-wrap']}>
+            {interestGroups.map((group) => (
+              <div key={group.title} className={styles['interest-group']}>
+                <h4>{group.title}</h4>
+                <div className={styles['interest-grid']}>
+                  {group.items.map((interest) => {
+                    const selected = selectedInterests.includes(interest.value);
+                    return (
+                      <button
+                        key={interest.value}
+                        type="button"
+                        className={`${styles['interest-chip']} ${selected ? styles['interest-chip-active'] : ''}`}
+                        onClick={() => toggleInterest(interest.value)}
+                      >
+                        {interest.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className={styles['file-help']}>
+            Selected: {selectedInterests.length} interest{selectedInterests.length !== 1 ? 's' : ''}
+          </div>
 
           <label>Marks (12) - upload marksheet</label>
           <div style={{ marginBottom: 8 }}>
-            <button type="button" onClick={() => window.open('https://www.digilocker.gov.in/', '_blank')} style={{ padding: '8px 16px', background: '#1976d2', color: 'white', border: 'none', borderRadius: 4 }}>Go to DigiLocker</button>
+            <button type="button" onClick={() => window.open('https://www.digilocker.gov.in/', '_blank')} className={styles['digilocker-btn']}>Go to DigiLocker</button>
           </div>
           <div style={{ marginBottom: 8 }}>
             <input type="file" accept="application/pdf" onChange={onFile} />
-            <div style={{ fontSize: 13, color: '#555' }}>After downloading your marksheet PDF from DigiLocker, upload it here.</div>
+            <div className={styles['file-help']}>After downloading your marksheet PDF from DigiLocker, upload it here.</div>
           </div>
           {digilockerPrompt && (
-            <div style={{ color: 'red', marginBottom: 8 }}>
+            <div className={styles['error-text']}>
               Only DigiLocker-verified certificates are accepted. Please use DigiLocker to upload your marksheet.
             </div>
           )}
@@ -166,7 +256,7 @@ export default function StudentProfile() {
               <div>
                 <a href={profile.marksheetUrl} target="_blank" rel="noreferrer" className={styles['profile-marksheet-link']}>View existing marksheet</a>
                 {profile.aggregatePercentage !== null && (
-                  <div style={{ marginTop: 6 }}>Extracted aggregate: {profile.aggregatePercentage}%</div>
+                  <div className={styles['meta-text']}>Extracted aggregate: {profile.aggregatePercentage}%</div>
                 )}
                 {profile.marksheetText && (
                   <details style={{ marginTop: 6 }}>
@@ -220,6 +310,7 @@ export default function StudentProfile() {
 
           <button type="submit" disabled={loading}>{loading ? 'Saving...' : 'Save Profile'}</button>
         </form>
+      </div>
       </div>
     </div>
   );

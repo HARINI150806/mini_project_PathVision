@@ -83,6 +83,9 @@ public class User implements UserDetails {
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
 
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+
     public String getVerificationCode() { return verificationCode; }
     public void setVerificationCode(String verificationCode) { this.verificationCode = verificationCode; }
 

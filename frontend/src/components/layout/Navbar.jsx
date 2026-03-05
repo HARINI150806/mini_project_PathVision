@@ -11,6 +11,13 @@ const navItems = [
   { label: 'Testimonials', hash: '#testimonials' },
 ];
 
+const getDashboardPath = (role) => {
+  const normalized = (role || '').toLowerCase();
+  if (normalized === 'admin') return '/dashboard/admin';
+  if (normalized === 'professional') return '/dashboard/professional';
+  return '/dashboard/student';
+};
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -19,6 +26,20 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
   const isLogin = location.pathname === '/login';
   const toSectionHref = (hash) => (location.pathname === '/' ? hash : `/${hash}`);
+  const storedUser = (() => {
+    try {
+      return JSON.parse(localStorage.getItem('user') || 'null');
+    } catch {
+      return null;
+    }
+  })();
+  const hasSession = !!localStorage.getItem('token') || !!storedUser;
+  const dashboardPath = getDashboardPath(storedUser?.role);
+  const dashboardLabel = storedUser?.name?.trim()
+    ? storedUser.name.trim()
+    : storedUser?.role
+      ? `${storedUser.role.toLowerCase().charAt(0).toUpperCase()}${storedUser.role.toLowerCase().slice(1)}`
+      : 'My Account';
 
   const headerClass = isDark
     ? 'bg-[#011445]/95 border-b border-cyan-300/20'
@@ -26,11 +47,11 @@ const Navbar = () => {
 
   const navTextClass = 'text-slate-100';
   const brandTextClass = 'text-white';
-  const headerLayoutClass = 'sticky top-0 z-50';
+  const headerLayoutClass = 'fixed top-0 left-0 z-50 w-full';
 
   return (
-    <header className={`${headerLayoutClass} backdrop-blur-md ${headerClass}`}>
-      <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+    <header className={`${headerLayoutClass} backdrop-blur-md ${headerClass}`} style={{ height: 'var(--navbar-height)' }}>
+      <nav className="mx-auto flex h-full w-full max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link to="/" className={`flex items-center gap-2 ${brandTextClass}`}>
           <Logo width={34} height={34} className={isDark ? 'text-teal-300' : 'text-teal-200'} />
           <span className="text-2xl font-semibold leading-none tracking-tight">PathVision</span>
@@ -63,34 +84,43 @@ const Navbar = () => {
             onClick={toggleTheme}
             aria-label="Toggle theme"
             aria-pressed={isDark}
-            className={`relative h-9 w-[4.5rem] rounded-full border transition ${
-              isDark
-                ? 'border-cyan-300/60 bg-[#0a2462]'
-                : 'border-white/60 bg-white/20'
-            }`}
+            className={`theme-toggle ${isDark ? 'is-dark' : ''}`}
           >
-            <span className={`absolute left-1.5 top-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full ${isDark ? 'bg-slate-700/70' : 'bg-white/80'}`}>
-              <FiSun className={`${isDark ? 'text-slate-500' : 'text-amber-500'} text-sm`} />
+            <span className="theme-toggle__icon theme-toggle__icon--sun">
+              <FiSun className="text-sm" />
             </span>
-            <span className={`absolute right-1.5 top-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full ${isDark ? 'bg-cyan-500/20' : 'bg-white/25'}`}>
-              <FiMoon className={`${isDark ? 'text-cyan-200' : 'text-white'} text-sm`} />
+            <span className="theme-toggle__icon theme-toggle__icon--moon">
+              <FiMoon className="text-sm" />
             </span>
-            <span className={`absolute top-1.5 h-6 w-6 rounded-full bg-white shadow-lg transition ${isDark ? 'left-9' : 'left-1.5'}`} />
+            <span className="theme-toggle__thumb" />
           </button>
-          <Link
-            to="/login"
-            className="rounded-lg px-4 py-2 text-[15px] font-semibold text-slate-100 transition hover:bg-white/10"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className={`rounded-lg px-5 py-2.5 text-[15px] font-semibold text-white shadow ${
-              isDark ? 'bg-teal-500 hover:bg-teal-600' : 'bg-[#24B5A7] hover:bg-[#1FA296]'
-            }`}
-          >
-            Get Started
-          </Link>
+          {hasSession ? (
+            <Link
+              to={dashboardPath}
+              className={`rounded-lg px-5 py-2.5 text-[15px] font-semibold text-white shadow ${
+                isDark ? 'bg-teal-500 hover:bg-teal-600' : 'bg-[#24B5A7] hover:bg-[#1FA296]'
+              }`}
+            >
+              {dashboardLabel}
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="rounded-lg px-4 py-2 text-[15px] font-semibold text-slate-100 transition hover:bg-white/10"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className={`rounded-lg px-5 py-2.5 text-[15px] font-semibold text-white shadow ${
+                  isDark ? 'bg-teal-500 hover:bg-teal-600' : 'bg-[#24B5A7] hover:bg-[#1FA296]'
+                }`}
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
 
         <button
@@ -118,17 +148,15 @@ const Navbar = () => {
             <button
               type="button"
               onClick={toggleTheme}
-              className={`relative h-9 w-[4.5rem] rounded-full border transition ${
-                isDark ? 'border-cyan-300/60 bg-[#0a2462]' : 'border-white/55 bg-white/20'
-              }`}
+              className={`theme-toggle ${isDark ? 'is-dark' : ''}`}
             >
-              <span className={`absolute left-1.5 top-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full ${isDark ? 'bg-slate-700/70' : 'bg-white/80'}`}>
-                <FiSun className={`${isDark ? 'text-slate-500' : 'text-amber-500'} text-sm`} />
+              <span className="theme-toggle__icon theme-toggle__icon--sun">
+                <FiSun className="text-sm" />
               </span>
-              <span className={`absolute right-1.5 top-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full ${isDark ? 'bg-cyan-500/20' : 'bg-white/25'}`}>
-                <FiMoon className={`${isDark ? 'text-cyan-200' : 'text-white'} text-sm`} />
+              <span className="theme-toggle__icon theme-toggle__icon--moon">
+                <FiMoon className="text-sm" />
               </span>
-              <span className={`absolute top-1.5 h-6 w-6 rounded-full bg-white shadow-lg transition ${isDark ? 'left-9' : 'left-1.5'}`} />
+              <span className="theme-toggle__thumb" />
             </button>
           </div>
           <ul className="space-y-2 text-base font-medium">
@@ -144,22 +172,38 @@ const Navbar = () => {
                 </a>
               </li>
             ))}
-            <li>
-              <Link to="/login" onClick={() => setMenuOpen(false)} className="block rounded px-1 py-1">
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/register"
-                onClick={() => setMenuOpen(false)}
-                className={`mt-2 inline-block rounded-lg px-6 py-2.5 font-semibold text-white ${
-                  isDark ? 'bg-teal-500' : 'bg-[#24B5A7]'
-                }`}
-              >
-                Get Started
-              </Link>
-            </li>
+            {hasSession ? (
+              <li>
+                <Link
+                  to={dashboardPath}
+                  onClick={() => setMenuOpen(false)}
+                  className={`mt-2 inline-block rounded-lg px-6 py-2.5 font-semibold text-white ${
+                    isDark ? 'bg-teal-500' : 'bg-[#24B5A7]'
+                  }`}
+                >
+                  {dashboardLabel}
+                </Link>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login" onClick={() => setMenuOpen(false)} className="block rounded px-1 py-1">
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/register"
+                    onClick={() => setMenuOpen(false)}
+                    className={`mt-2 inline-block rounded-lg px-6 py-2.5 font-semibold text-white ${
+                      isDark ? 'bg-teal-500' : 'bg-[#24B5A7]'
+                    }`}
+                  >
+                    Get Started
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       )}

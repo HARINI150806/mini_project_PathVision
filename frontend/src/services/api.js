@@ -10,6 +10,16 @@ const endpoints = {
   register: `${AUTH_BASE}/register`,
   verify: `${AUTH_BASE}/verify`,
   profile: `${API_BASE}/student/profile`,
+  adminColleges: `${API_BASE}/admin/colleges`,
+  adminCollegesUpload: `${API_BASE}/admin/colleges/upload`,
+  adminCutoffsUpload: `${API_BASE}/admin/colleges/cutoffs/upload`,
+  adminCutoffs: `${API_BASE}/admin/colleges/cutoffs`,
+  adminResources: `${API_BASE}/admin/resources`,
+  adminResourcesUpload: `${API_BASE}/admin/resources/upload`,
+  adminUsers: `${API_BASE}/admin/users`,
+  studentColleges: `${API_BASE}/student/colleges`,
+  studentCollegeRecommendations: `${API_BASE}/student/college-recommendations`,
+  studentRecommendedResources: `${API_BASE}/student/resources/recommended`,
 };
 
 export default endpoints;
