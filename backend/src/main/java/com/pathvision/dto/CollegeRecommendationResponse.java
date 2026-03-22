@@ -3,6 +3,9 @@ package com.pathvision.dto;
 public class CollegeRecommendationResponse {
     private Long collegeId;
     private String collegeName;
+    private String branch;
+    private String branchCode;
+    private Integer admissionYear;
     private String district;
     private String state;
     private String type;
@@ -29,6 +32,30 @@ public class CollegeRecommendationResponse {
 
     public void setCollegeName(String collegeName) {
         this.collegeName = collegeName;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public Integer getAdmissionYear() {
+        return admissionYear;
+    }
+
+    public void setAdmissionYear(Integer admissionYear) {
+        this.admissionYear = admissionYear;
     }
 
     public String getDistrict() {

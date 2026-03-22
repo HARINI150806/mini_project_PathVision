@@ -1,8 +1,10 @@
 package com.pathvision.controller;
 
 import com.pathvision.dto.CollegeResponse;
+import com.pathvision.dto.CollegeFeeDetailResponse;
 import com.pathvision.service.CollegeService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,5 +26,10 @@ public class StudentCollegeController {
             @RequestParam(value = "community", required = false) String community
     ) {
         return collegeService.getAllColleges(community);
+    }
+
+    @GetMapping("/{collegeId}/fees")
+    public CollegeFeeDetailResponse getCollegeFees(@PathVariable Long collegeId) {
+        return collegeService.getCollegeFeeDetails(collegeId);
     }
 }

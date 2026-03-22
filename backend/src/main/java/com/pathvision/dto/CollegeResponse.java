@@ -2,6 +2,8 @@ package com.pathvision.dto;
 
 import com.pathvision.entity.College;
 
+import java.time.LocalDateTime;
+
 public class CollegeResponse {
     private Long id;
     private String name;
@@ -14,6 +16,9 @@ public class CollegeResponse {
     private Double communityCutoff;
     private Double latitude;
     private Double longitude;
+    private String feeSourceUrl;
+    private LocalDateTime feeLastSyncedAt;
+    private String feeSyncStatus;
 
     public static CollegeResponse fromEntity(College college) {
         CollegeResponse response = new CollegeResponse();
@@ -27,6 +32,9 @@ public class CollegeResponse {
         response.setAnnualFees(college.getAnnualFees());
         response.setLatitude(college.getLatitude());
         response.setLongitude(college.getLongitude());
+        response.setFeeSourceUrl(college.getFeeSourceUrl());
+        response.setFeeLastSyncedAt(college.getFeeLastSyncedAt());
+        response.setFeeSyncStatus(college.getFeeSyncStatus());
         return response;
     }
 
@@ -116,5 +124,29 @@ public class CollegeResponse {
 
     public void setCommunityCutoff(Double communityCutoff) {
         this.communityCutoff = communityCutoff;
+    }
+
+    public String getFeeSourceUrl() {
+        return feeSourceUrl;
+    }
+
+    public void setFeeSourceUrl(String feeSourceUrl) {
+        this.feeSourceUrl = feeSourceUrl;
+    }
+
+    public LocalDateTime getFeeLastSyncedAt() {
+        return feeLastSyncedAt;
+    }
+
+    public void setFeeLastSyncedAt(LocalDateTime feeLastSyncedAt) {
+        this.feeLastSyncedAt = feeLastSyncedAt;
+    }
+
+    public String getFeeSyncStatus() {
+        return feeSyncStatus;
+    }
+
+    public void setFeeSyncStatus(String feeSyncStatus) {
+        this.feeSyncStatus = feeSyncStatus;
     }
 }

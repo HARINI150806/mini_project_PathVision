@@ -1,6 +1,7 @@
 package com.pathvision.controller;
 
 import com.pathvision.dto.AuthResponse;
+import com.pathvision.dto.GoogleLoginRequest;
 import com.pathvision.dto.LoginRequest;
 import com.pathvision.dto.RegisterRequest;
 import com.pathvision.dto.VerifyRequest; 
@@ -37,5 +38,10 @@ public class AuthController {
 public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
     return authService.login(request);
 }
+
+    @PostMapping("/google")
+    public ResponseEntity<?> googleLogin(@RequestBody @Valid GoogleLoginRequest request) {
+        return authService.googleLogin(request.getIdToken());
+    }
 
 }

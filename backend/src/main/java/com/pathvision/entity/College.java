@@ -3,6 +3,8 @@ package com.pathvision.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "colleges")
 public class College {
@@ -28,6 +30,16 @@ public class College {
 
     private Double rating;
     private Double annualFees;
+    private String feeSourceUrl;
+    private String feeSourceType;
+    private String feeRowSelector;
+    private String feeLabelSelector;
+    private String feeAmountSelector;
+    private LocalDateTime feeLastSyncedAt;
+    private String feeSyncStatus;
+
+    @Column(length = 1000)
+    private String feeSyncMessage;
 
     @Column(nullable = true)
     private Double latitude;
@@ -116,5 +128,69 @@ public class College {
 
     public void setAnnualFees(Double annualFees) {
         this.annualFees = annualFees;
+    }
+
+    public String getFeeSourceUrl() {
+        return feeSourceUrl;
+    }
+
+    public void setFeeSourceUrl(String feeSourceUrl) {
+        this.feeSourceUrl = feeSourceUrl;
+    }
+
+    public String getFeeSourceType() {
+        return feeSourceType;
+    }
+
+    public void setFeeSourceType(String feeSourceType) {
+        this.feeSourceType = feeSourceType;
+    }
+
+    public String getFeeRowSelector() {
+        return feeRowSelector;
+    }
+
+    public void setFeeRowSelector(String feeRowSelector) {
+        this.feeRowSelector = feeRowSelector;
+    }
+
+    public String getFeeLabelSelector() {
+        return feeLabelSelector;
+    }
+
+    public void setFeeLabelSelector(String feeLabelSelector) {
+        this.feeLabelSelector = feeLabelSelector;
+    }
+
+    public String getFeeAmountSelector() {
+        return feeAmountSelector;
+    }
+
+    public void setFeeAmountSelector(String feeAmountSelector) {
+        this.feeAmountSelector = feeAmountSelector;
+    }
+
+    public LocalDateTime getFeeLastSyncedAt() {
+        return feeLastSyncedAt;
+    }
+
+    public void setFeeLastSyncedAt(LocalDateTime feeLastSyncedAt) {
+        this.feeLastSyncedAt = feeLastSyncedAt;
+    }
+
+    public String getFeeSyncStatus() {
+        return feeSyncStatus;
+    }
+
+    public void setFeeSyncStatus(String feeSyncStatus) {
+        this.feeSyncStatus = feeSyncStatus;
+    }
+
+    public String getFeeSyncMessage() {
+        return feeSyncMessage;
+    }
+
+    public void setFeeSyncMessage(String feeSyncMessage) {
+        this.feeSyncMessage = feeSyncMessage;
     }
 }

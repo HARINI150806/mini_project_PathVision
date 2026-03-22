@@ -1,5 +1,6 @@
-// Centralized API endpoints for the frontend
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+// Default to same-origin API calls in development so Vite can proxy `/api`
+// to the Spring backend without the browser talking to localhost:8080 directly.
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
 const AUTH_BASE = `${API_BASE}/auth`;
 
@@ -7,6 +8,7 @@ const endpoints = {
   BASE: API_BASE,
   AUTH: AUTH_BASE,
   login: `${AUTH_BASE}/login`,
+  googleLogin: `${AUTH_BASE}/google`,
   register: `${AUTH_BASE}/register`,
   verify: `${AUTH_BASE}/verify`,
   profile: `${API_BASE}/student/profile`,

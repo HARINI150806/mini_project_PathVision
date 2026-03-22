@@ -154,7 +154,7 @@
 
 .admin-cutoff-form {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr auto;
+  grid-template-columns: minmax(180px, 2fr) repeat(5, minmax(120px, 1fr)) auto;
   gap: 0.7rem;
 }
 

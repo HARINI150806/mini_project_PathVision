@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(
         name = "college_cutoffs",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"college_id", "community"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {"college_id", "branch_code", "community", "admission_year"})
 )
 public class CollegeCutoff {
 
@@ -21,6 +21,16 @@ public class CollegeCutoff {
 
     @NotBlank(message = "Community is required")
     private String community;
+
+    @NotBlank(message = "Branch is required")
+    private String branch;
+
+    @Column(name = "branch_code")
+    @NotBlank(message = "Branch code is required")
+    private String branchCode;
+
+    @Column(name = "admission_year")
+    private Integer admissionYear;
 
     @NotNull(message = "Cutoff score is required")
     private Double cutoffScore;
@@ -47,6 +57,30 @@ public class CollegeCutoff {
 
     public void setCommunity(String community) {
         this.community = community;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public Integer getAdmissionYear() {
+        return admissionYear;
+    }
+
+    public void setAdmissionYear(Integer admissionYear) {
+        this.admissionYear = admissionYear;
     }
 
     public Double getCutoffScore() {

@@ -2,8 +2,10 @@ package com.pathvision.controller;
 
 import com.pathvision.dto.CreateCollegeCutoffRequest;
 import com.pathvision.dto.CollegeCutoffResponse;
+import com.pathvision.dto.CollegeFeeDetailResponse;
 import com.pathvision.dto.CollegeResponse;
 import com.pathvision.dto.CollegeUploadResponse;
+import com.pathvision.dto.ConfigureCollegeFeeSourceRequest;
 import com.pathvision.dto.CreateCollegeRequest;
 import com.pathvision.service.CollegeService;
 import jakarta.validation.Valid;
@@ -36,7 +38,7 @@ public class AdminCollegeController {
 
     @PostMapping("/upload")
     public CollegeUploadResponse uploadColleges(@RequestParam("file") MultipartFile file) {
-        return collegeService.uploadCollegesCsv(file);
+        return collegeService.uploadCollegesDataset(file);
     }
 
     @PostMapping("/{collegeId}/cutoffs")
@@ -47,11 +49,29 @@ public class AdminCollegeController {
 
     @PostMapping("/cutoffs/upload")
     public CollegeUploadResponse uploadCutoffs(@RequestParam("file") MultipartFile file) {
-        return collegeService.uploadCutoffsCsv(file);
+        return collegeService.uploadCutoffsDataset(file);
     }
 
     @GetMapping("/cutoffs")
     public List<CollegeCutoffResponse> getAllCutoffs() {
         return collegeService.getAllCutoffs();
+    }
+
+    @PutMapping("/{collegeId}/fees/source")
+    public CollegeResponse configureFeeSource(
+            @PathVariable Long collegeId,
+            @RequestBody @Valid ConfigureCollegeFeeSourceRequest request
+    ) {
+        return collegeService.configureFeeSource(collegeId, request);
+    }
+
+    @PostMapping("/{collegeId}/fees/sync")
+    public CollegeFeeDetailResponse syncCollegeFees(@PathVariable Long collegeId) {
+        return collegeService.syncCollegeFees(collegeId);
+    }
+
+    @GetMapping("/{collegeId}/fees")
+    public CollegeFeeDetailResponse getCollegeFees(@PathVariable Long collegeId) {
+        return collegeService.getCollegeFeeDetails(collegeId);
     }
 }

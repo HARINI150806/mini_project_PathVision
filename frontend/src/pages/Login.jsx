@@ -7,15 +7,57 @@ import learningImage from '../assets/login-learning-hero.svg';
 
 const Login = () => {
   const navigate = useNavigate();
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [isAlreadyLoggedIn, setIsAlreadyLoggedIn] = useState(false);
+  const [googleReady, setGoogleReady] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   useEffect(() => {
     const hasSession = !!localStorage.getItem('token') || !!localStorage.getItem('user');
     setIsAlreadyLoggedIn(hasSession);
   }, []);
+
+  useEffect(() => {
+    if (!googleClientId) return;
+    const scriptId = 'google-identity-service';
+    const initializeGoogle = () => {
+      if (!window.google?.accounts?.id) return;
+      window.google.accounts.id.initialize({
+        client_id: googleClientId,
+        callback: handleGoogleCredentialResponse,
+      });
+      const container = document.getElementById('google-login-button');
+      if (container) {
+        container.innerHTML = '';
+        window.google.accounts.id.renderButton(container, {
+          theme: 'outline',
+          size: 'large',
+          shape: 'rectangular',
+          text: 'continue_with',
+          width: 320,
+        });
+      }
+      setGoogleReady(true);
+    };
+
+    const existing = document.getElementById(scriptId);
+    if (existing) {
+      initializeGoogle();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    script.onload = initializeGoogle;
+    script.onerror = () => setError('Google Sign-In script failed to load.');
+    document.head.appendChild(script);
+  }, [googleClientId]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -32,6 +74,48 @@ const Login = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const persistAndNavigate = (data) => {
+    const tokenValue = data && data.token ? data.token : null;
+    if (tokenValue) {
+      localStorage.setItem('token', tokenValue);
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          name: data && data.name ? data.name : '',
+          role: data && data.role ? data.role : '',
+        }),
+      );
+    }
+    navigateByRole(data && data.role ? data.role : '');
+  };
+
+  const handleGoogleCredentialResponse = async (credentialResponse) => {
+    const idToken = credentialResponse?.credential;
+    if (!idToken) {
+      setError('Google sign-in failed. Missing token.');
+      return;
+    }
+    setError('');
+    setGoogleLoading(true);
+    try {
+      const response = await fetch(endpoints.googleLogin, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data?.message || 'Google login failed.');
+        return;
+      }
+      persistAndNavigate(data);
+    } catch {
+      setError('Could not connect to the server for Google login.');
+    } finally {
+      setGoogleLoading(false);
+    }
   };
 
   const handleLogin = async (e) => {
@@ -58,18 +142,7 @@ const Login = () => {
       }
 
       if (response.ok) {
-        const tokenValue = data && data.token ? data.token : text || null;
-        if (tokenValue) {
-          localStorage.setItem('token', tokenValue);
-          localStorage.setItem(
-            'user',
-            JSON.stringify({
-              name: data && data.name ? data.name : '',
-              role: data && data.role ? data.role : '',
-            }),
-          );
-        }
-        navigateByRole(data && data.role ? data.role : '');
+        persistAndNavigate(data);
       } else {
         const message = data && data.message ? data.message.toString() : text ? text.toString() : '';
         const lower = message.toLowerCase();
@@ -120,17 +193,15 @@ const Login = () => {
               </div>
             )}
 
-            <button type="button" className="login-google-btn">
-              <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-                <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
-                  <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z"/>
-                  <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z"/>
-                  <path fill="#FBBC05" d="M -21.484 53.529 C -21.734 52.809 -21.864 52.039 -21.864 51.239 C -21.864 50.439 -21.734 49.669 -21.484 48.949 L -21.484 45.859 L -25.464 45.859 C -26.284 47.479 -26.754 49.299 -26.754 51.239 C -26.754 53.179 -26.284 54.999 -25.464 56.619 L -21.484 53.529 Z"/>
-                  <path fill="#EA4335" d="M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z"/>
-                </g>
-              </svg>
-              Continue with Google
-            </button>
+            {googleClientId ? (
+              <div id="google-login-button" style={{ display: 'flex', justifyContent: 'center', minHeight: 42 }} />
+            ) : (
+              <button type="button" className="login-google-btn" disabled>
+                Configure VITE_GOOGLE_CLIENT_ID to enable Google login
+              </button>
+            )}
+            {googleClientId && !googleReady && <p className="login-subtext">Loading Google Sign-In...</p>}
+            {googleLoading && <p className="login-subtext">Signing in with Google...</p>}
 
             <div className="login-divider">
               <span>or</span>

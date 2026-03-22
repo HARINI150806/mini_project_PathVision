@@ -16,6 +16,9 @@ const initialForm = {
 
 const initialCutoffForm = {
   collegeId: '',
+  branch: '',
+  branchCode: '',
+  admissionYear: new Date().getFullYear(),
   community: '',
   cutoffScore: '',
 };
@@ -41,6 +44,28 @@ const menus = [
   { id: 'cutoffs', label: 'Map Cutoffs', icon: FiBarChart2 },
   { id: 'uploads', label: 'Dataset Uploads', icon: FiUpload },
 ];
+
+const parseErrorResponse = async (response, fallbackMessage) => {
+  const raw = await response.text();
+  if (!raw) return fallbackMessage;
+
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed.errors) && parsed.errors.length) {
+      return `${parsed.message || fallbackMessage} ${parsed.errors.join(' | ')}`.trim();
+    }
+    return parsed.message || parsed.error || raw;
+  } catch {
+    return raw;
+  }
+};
+
+const buildUploadSummary = (label, result) => {
+  const success = result?.successCount ?? 0;
+  const total = result?.totalRows ?? 0;
+  const issues = Array.isArray(result?.errors) ? result.errors : [];
+  return `${label}: ${success}/${total} rows imported.${issues.length ? ` Issues: ${issues.join(' | ')}` : ''}`;
+};
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -241,8 +266,8 @@ const AdminDashboard = () => {
 
   const handleAddCutoff = async (event) => {
     event.preventDefault();
-    if (!cutoffForm.collegeId || !cutoffForm.community || cutoffForm.cutoffScore === '') {
-      setError('Select college, community and cutoff score.');
+    if (!cutoffForm.collegeId || !cutoffForm.branch || !cutoffForm.branchCode || !cutoffForm.community || cutoffForm.cutoffScore === '') {
+      setError('Select college, branch, branch code, community and cutoff score.');
       return;
     }
     setError('');
@@ -252,6 +277,9 @@ const AdminDashboard = () => {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify({
+          branch: cutoffForm.branch,
+          branchCode: cutoffForm.branchCode,
+          admissionYear: cutoffForm.admissionYear === '' ? null : Number(cutoffForm.admissionYear),
           community: cutoffForm.community,
           cutoffScore: Number(cutoffForm.cutoffScore),
         }),
@@ -268,6 +296,9 @@ const AdminDashboard = () => {
             id: `local-${Date.now()}`,
             collegeId: cutoffForm.collegeId,
             collegeName: selectedCollege?.name || 'College',
+            branch: cutoffForm.branch,
+            branchCode: cutoffForm.branchCode,
+            admissionYear: cutoffForm.admissionYear === '' ? null : Number(cutoffForm.admissionYear),
             community: cutoffForm.community,
             cutoffScore: Number(cutoffForm.cutoffScore),
           },
@@ -302,11 +333,10 @@ const AdminDashboard = () => {
         body: formDataUpload,
       });
       if (!response.ok) {
-        const text = await response.text();
-        throw new Error(text || 'College dataset upload failed.');
+        throw new Error(await parseErrorResponse(response, 'College dataset upload failed.'));
       }
       const result = await response.json();
-      setStatus(`College upload: ${result.successCount}/${result.totalRows} rows imported.`);
+      setStatus(buildUploadSummary('College upload', result));
       setDatasetFile(null);
       await loadColleges();
     } catch (err) {
@@ -319,7 +349,7 @@ const AdminDashboard = () => {
   const handleCutoffDatasetUpload = async (event) => {
     event.preventDefault();
     if (!cutoffDatasetFile) {
-      setError('Choose a cutoff CSV file first.');
+      setError('Choose a cutoff CSV or PDF file first.');
       return;
     }
     setCutoffUploading(true);
@@ -335,11 +365,10 @@ const AdminDashboard = () => {
         body: formDataUpload,
       });
       if (!response.ok) {
-        const text = await response.text();
-        throw new Error(text || 'Cutoff dataset upload failed.');
+        throw new Error(await parseErrorResponse(response, 'Cutoff dataset upload failed.'));
       }
       const result = await response.json();
-      setStatus(`Cutoff upload: ${result.successCount}/${result.totalRows} rows imported.`);
+      setStatus(buildUploadSummary('Cutoff upload', result));
       setCutoffDatasetFile(null);
       if (cutoffApiAvailable) {
         await loadCutoffs();
@@ -392,11 +421,10 @@ const AdminDashboard = () => {
         body: formDataUpload,
       });
       if (!response.ok) {
-        const text = await response.text();
-        throw new Error(text || 'Resources dataset upload failed.');
+        throw new Error(await parseErrorResponse(response, 'Resources dataset upload failed.'));
       }
       const result = await response.json();
-      setStatus(`Resource upload: ${result.successCount}/${result.totalRows} rows imported.`);
+      setStatus(buildUploadSummary('Resource upload', result));
       setResourceFile(null);
       await loadResources();
     } catch (err) {
@@ -530,14 +558,43 @@ const AdminDashboard = () => {
                 ))}
               </select>
               <select
+                value={cutoffForm.branch}
+                onChange={(e) => setCutoffForm((p) => ({ ...p, branch: e.target.value }))}
+              >
+                <option value="">Select Branch</option>
+                <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+                <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="General">General</option>
+              </select>
+              <input
+                type="text"
+                placeholder="Branch Code"
+                value={cutoffForm.branchCode}
+                onChange={(e) => setCutoffForm((p) => ({ ...p, branchCode: e.target.value.toUpperCase() }))}
+              />
+              <input
+                type="number"
+                placeholder="Year"
+                value={cutoffForm.admissionYear}
+                onChange={(e) => setCutoffForm((p) => ({ ...p, admissionYear: e.target.value }))}
+                min="2000"
+                max="2100"
+              />
+              <select
                 value={cutoffForm.community}
                 onChange={(e) => setCutoffForm((p) => ({ ...p, community: e.target.value }))}
               >
                 <option value="">Community</option>
                 <option value="OC">OC</option>
                 <option value="BC">BC</option>
+                <option value="BCM">BCM</option>
                 <option value="MBC">MBC</option>
                 <option value="SC">SC</option>
+                <option value="SCA">SCA</option>
                 <option value="ST">ST</option>
               </select>
               <input
@@ -555,6 +612,9 @@ const AdminDashboard = () => {
                 <thead>
                   <tr>
                     <th>College</th>
+                    <th>Branch</th>
+                    <th>Code</th>
+                    <th>Year</th>
                     <th>Community</th>
                     <th>Cutoff Score</th>
                   </tr>
@@ -563,6 +623,9 @@ const AdminDashboard = () => {
                   {cutoffs.map((item) => (
                     <tr key={item.id}>
                       <td>{item.collegeName}</td>
+                      <td>{item.branch || 'General'}</td>
+                      <td>{item.branchCode || '-'}</td>
+                      <td>{item.admissionYear || '-'}</td>
                       <td>{item.community}</td>
                       <td>{item.cutoffScore}</td>
                     </tr>
@@ -577,14 +640,14 @@ const AdminDashboard = () => {
           <section className="admin-panel">
             <h3>Dataset Uploads</h3>
             <form className="admin-upload-form" onSubmit={handleCollegeDatasetUpload}>
-              <label htmlFor="collegeCsvUpload">College CSV: name,type,district,state,address (+ optional rating,annualFees,latitude,longitude)</label>
-              <input id="collegeCsvUpload" type="file" accept=".csv" onChange={(e) => setDatasetFile(e.target.files?.[0] || null)} />
-              <button type="submit" disabled={uploading}>{uploading ? 'Uploading...' : 'Upload Colleges CSV'}</button>
+              <label htmlFor="collegeCsvUpload">College dataset: CSV or PDF. CSV format: `name,type,district,state,address` (+ optional `rating,annualFees,latitude,longitude`). PDF import creates placeholder college records from detected college names.</label>
+              <input id="collegeCsvUpload" type="file" accept=".csv,.pdf,application/pdf" onChange={(e) => setDatasetFile(e.target.files?.[0] || null)} />
+              <button type="submit" disabled={uploading}>{uploading ? 'Uploading...' : 'Upload Colleges CSV/PDF'}</button>
             </form>
             <form className="admin-upload-form" onSubmit={handleCutoffDatasetUpload}>
-              <label htmlFor="cutoffCsvUpload">Cutoff CSV: college_name,community,cutoffScore</label>
-              <input id="cutoffCsvUpload" type="file" accept=".csv" onChange={(e) => setCutoffDatasetFile(e.target.files?.[0] || null)} />
-              <button type="submit" disabled={cutoffUploading}>{cutoffUploading ? 'Uploading...' : 'Upload Cutoff CSV'}</button>
+              <label htmlFor="cutoffCsvUpload">Cutoff dataset: CSV or PDF. Supported CSV formats: `college_name,community,cutoffScore` or branch-wise `College Name,Branch,Branch Code,OC,BC,BCM,MBC,SC,SCA,ST`.</label>
+              <input id="cutoffCsvUpload" type="file" accept=".csv,.pdf,application/pdf" onChange={(e) => setCutoffDatasetFile(e.target.files?.[0] || null)} />
+              <button type="submit" disabled={cutoffUploading}>{cutoffUploading ? 'Uploading...' : 'Upload Cutoff CSV/PDF'}</button>
             </form>
             <form className="admin-upload-form" onSubmit={handleResourceDatasetUpload}>
               <label htmlFor="resourceCsvUpload">Resources CSV: title,provider,source,level,url,interest_key</label>
